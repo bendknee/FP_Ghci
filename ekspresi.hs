@@ -31,5 +31,10 @@ subst v0 e0 (Let v1 e1 e2) = Let v1 e1 (subst v0 e0 e2)
 -- eval_rec (exp `op` exp) = 
 
 evaluate :: Expr -> Float
-evaluate exp = foldr 0.0 eval_rec exp
-	where eval_rec (e1 :+ e2) = eval_rec e1 :+ eval_rec e2
+
+eval_rec (e1 :+ e2) = e1 + e2
+eval_rec (e1 :- e2) = e1 - e2
+eval_rec (e1 :* e2) = e1 * e2
+eval_base (C x) = x
+evaluate exp = foldr eval_base eval_rec exp
+
